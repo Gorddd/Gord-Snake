@@ -6,6 +6,7 @@ namespace GordSnake
     public static class PixelChars
     {
         public const char Brick = '▓';
+        public const char Snake = '@';
     }
 
 
@@ -29,6 +30,8 @@ namespace GordSnake
 
         public void Draw()
         {
+            Console.ForegroundColor = Color;
+
             Console.SetCursorPosition(X, Y);
             Console.Write(PixelChar);
         }

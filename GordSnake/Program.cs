@@ -9,12 +9,22 @@ namespace GordSnake
         static void Main()
         {
             Console.CursorVisible = false;
+
             var area = new Area(30, 20);
-            area.DrawBorder();
+            var snake = new Snake(15, 15);
 
-            Font.SetConsoleFont();
+            while (true)
+            {
+                area.DrawBorder();
+                snake.Draw();
 
-            Console.ReadKey();
+
+                Console.ReadKey();
+            }
+
+            
+
+            
         }
     }
 }
