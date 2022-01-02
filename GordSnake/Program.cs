@@ -18,9 +18,18 @@ namespace GordSnake
 
         static void ReadRecord()
         {
-            var sr = new StreamReader("Record.txt", false);
-            Record = Convert.ToInt32(sr.ReadToEnd());
-            sr.Close();
+            try
+            {
+                var sr = new StreamReader("Record.txt", false);
+                Record = Convert.ToInt32(sr.ReadToEnd());
+                sr.Close();
+            }
+            catch 
+            {
+                var sw = new StreamWriter("Record.txt");
+                sw.Write(0);
+                sw.Close();
+            }
         }
 
         static void WriteNewRecord()
