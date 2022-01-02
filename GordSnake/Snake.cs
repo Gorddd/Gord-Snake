@@ -16,7 +16,7 @@ namespace GordSnake
             Head = new Pixel(headX, headY, headColor, PixelChars.Snake);
         }
 
-        private Queue<Pixel> body = new Queue<Pixel>();
+        public Queue<Pixel> body = new Queue<Pixel>();
         public Pixel Head { get; private set; }
 
 
@@ -41,12 +41,13 @@ namespace GordSnake
         }
 
 
-        public void Move(Direction direction)
+        public void Move(Direction direction, bool isEating)
         {
             Clear();
 
             body.Enqueue(new Pixel(Head.X, Head.Y, bodyColor, PixelChars.Snake));
-            body.Dequeue();
+            if(!isEating)
+                body.Dequeue();
 
             switch (direction)
             {

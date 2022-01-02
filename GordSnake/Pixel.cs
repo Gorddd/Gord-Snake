@@ -7,6 +7,7 @@ namespace GordSnake
     {
         public const char Brick = '▓';
         public const char Snake = '@';
+        public const char Food = '+';
     }
 
 
