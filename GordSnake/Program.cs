@@ -1,16 +1,33 @@
 ﻿using System;
 using System.Threading;
+using System.IO;
 
 
 namespace GordSnake
 {
     class Program
     {
+        static int Record;
+
         static void ShowScore(int score)
         {
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.SetCursorPosition(0, 19);
-            Console.Write($"Score: {score}");
+            Console.Write($"Score: {score} Record: {Record}");
+        }
+
+        static void ReadRecord()
+        {
+            var sr = new StreamReader("Record.txt", false);
+            Record = Convert.ToInt32(sr.ReadToEnd());
+            sr.Close();
+        }
+
+        static void WriteNewRecord()
+        {
+            var sw = new StreamWriter("Record.txt");
+            sw.Write(Record);
+            sw.Close();
         }
 
         static void Main()
@@ -18,6 +35,8 @@ namespace GordSnake
             Console.CursorVisible = false;
 
             int score = 0;
+            ReadRecord();
+
             var area = new Area(30, 20);
             var snake = new Snake(15, 15);
 
@@ -40,7 +59,18 @@ namespace GordSnake
             }
 
             Console.SetCursorPosition(0, 19);
-            Console.Write($"Your score: {score}");
+            if (score > Record)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"New record: {score} Old record: {Record}");
+                Record = score;
+                WriteNewRecord();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"Your score: {score} Record: {Record}");
+            }
             Console.ReadKey();
         }
 
