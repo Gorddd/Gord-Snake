@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Globalization;
 using System.Text;
 
@@ -11,20 +12,48 @@ namespace GordSnake
             Console.CursorVisible = false;
 
             var area = new Area(30, 20);
+            area.DrawBorder();
             var snake = new Snake(15, 15);
 
+            Direction direction = Direction.Left;
             while (true)
             {
-                area.DrawBorder();
-                snake.Draw();
+                direction = Input(direction);
 
+                snake.Move(direction);
 
-                Console.ReadKey();
+                Thread.Sleep(140);
+            }
+        }
+
+        static Direction Input(Direction currentDirection)
+        {
+            if (!Console.KeyAvailable)
+                return currentDirection;
+
+            ConsoleKey key = Console.ReadKey(true).Key;
+
+            switch (key)
+            {
+                case ConsoleKey.UpArrow:
+                    if (currentDirection != Direction.Down)
+                        return Direction.Up;
+                    break;
+                case ConsoleKey.RightArrow:
+                    if (currentDirection != Direction.Left)
+                        return Direction.Right;
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (currentDirection != Direction.Up)
+                        return Direction.Down;
+                    break;
+                case ConsoleKey.LeftArrow:
+                    if (currentDirection != Direction.Right)
+                        return Direction.Left;
+                    break;
             }
 
-            
-
-            
+            return currentDirection;
         }
     }
 }

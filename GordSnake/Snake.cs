@@ -10,19 +10,21 @@ namespace GordSnake
 
         public Snake(int headX, int headY)
         {
-            bodyAndHead.Enqueue(new Pixel(headX + 1, headY, bodyColor, PixelChars.Snake));
-
+            body.Enqueue(new Pixel(headX + 2, headY, bodyColor, PixelChars.Snake));
+            body.Enqueue(new Pixel(headX + 1, headY, bodyColor, PixelChars.Snake));
+            
             Head = new Pixel(headX, headY, headColor, PixelChars.Snake);
-            bodyAndHead.Enqueue(Head);
         }
 
-        private Queue<Pixel> bodyAndHead = new Queue<Pixel>();
+        private Queue<Pixel> body = new Queue<Pixel>();
         public Pixel Head { get; private set; }
 
 
         public void Draw()
         {
-            foreach (var pixel in bodyAndHead)
+            Head.Draw();
+
+            foreach (var pixel in body)
             {
                 pixel.Draw();
             }
@@ -30,10 +32,39 @@ namespace GordSnake
 
         public void Clear()
         {
-            foreach (var pixel in bodyAndHead)
+            Head.Clear();
+
+            foreach (var pixel in body)
             {
                 pixel.Clear();
             }
+        }
+
+
+        public void Move(Direction direction)
+        {
+            Clear();
+
+            body.Enqueue(new Pixel(Head.X, Head.Y, bodyColor, PixelChars.Snake));
+            body.Dequeue();
+
+            switch (direction)
+            {
+                case Direction.Up:
+                    Head = new Pixel(Head.X, Head.Y - 1, headColor, PixelChars.Snake);
+                    break;
+                case Direction.Right:
+                    Head = new Pixel(Head.X + 1, Head.Y, headColor, PixelChars.Snake);
+                    break;
+                case Direction.Down:
+                    Head = new Pixel(Head.X, Head.Y + 1, headColor, PixelChars.Snake);
+                    break;
+                case Direction.Left:
+                    Head = new Pixel(Head.X - 1, Head.Y, headColor, PixelChars.Snake);
+                    break;
+            }
+
+            Draw();
         }
     }
 }
