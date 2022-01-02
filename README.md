@@ -1,3 +1,3 @@
 # Gord-Snake
-Snake game c# console
-![alt text](screenshots/gameplay "Interface")
+Snake game c# console\n
+![alt text](screenshots/gameplay.jpg "Interface")
